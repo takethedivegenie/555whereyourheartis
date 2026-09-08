@@ -3,15 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Where Your Heart Is</title>
-
   <style>
-
     /* =========================
        기본 설정
     ========================= */
-
     * {
       box-sizing: border-box;
     }
@@ -19,27 +15,18 @@
     body {
       margin: 0;
       min-height: 100vh;
-
       background: #000;
       color: #FFFFFF;
-
-      font-family:
-        Arial,
-        "Noto Sans KR",
-        sans-serif;
-
+      font-family: Arial, "Noto Sans KR", sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-
       padding: 70px 20px;
     }
-
 
     /* =========================
        제목
     ========================= */
-
     .header {
       text-align: center;
       margin-bottom: 55px;
@@ -49,568 +36,339 @@
       font-size: 12px;
       letter-spacing: 5px;
       margin-bottom: 22px;
-
       color: #888;
     }
 
     h1 {
       margin: 0;
-
       font-size: 42px;
       font-weight: 400;
-
       letter-spacing: 3px;
       line-height: 1.2;
     }
 
     .description {
       margin-top: 20px;
-
       font-size: 14px;
       line-height: 1.8;
-
       color: #888;
     }
-
 
     /* =========================
        하트
     ========================= */
-
     .heart-wrapper {
       width: 100%;
-
       display: flex;
       justify-content: center;
-
       overflow-x: auto;
-
       padding: 10px 0 20px;
     }
 
-
     .heart {
       display: grid;
-
-      /*
-        하트 전체를 25열로 구성
-      */
-
-      grid-template-columns:
-        repeat(25, 32px);
-
+      grid-template-columns: repeat(25, 32px);
       grid-auto-rows: 32px;
-
       gap: 4px;
-
       width: max-content;
     }
-
 
     /* =========================
        사진 칸
     ========================= */
-
     .photo {
       width: 32px;
       height: 32px;
-
       background: #e4e0da;
-
       overflow: hidden;
-
       position: relative;
-
-      transition:
-        transform 0.25s ease,
-        opacity 0.25s ease;
+      transition: transform 0.25s ease, opacity 0.25s ease;
     }
-
-
-    /*
-      마우스를 올렸을 때
-    */
 
     .photo:hover {
       transform: scale(1.12);
-
       z-index: 5;
     }
-
-
-    /*
-      실제 사진
-    */
 
     .photo img {
       width: 100%;
       height: 100%;
-
       object-fit: cover;
-
       display: block;
     }
-
-
-    /*
-      사진이 들어올 때 애니메이션
-    */
 
     .photo.filled {
       animation: appear 0.5s ease;
     }
 
-
     @keyframes appear {
-
       0% {
         opacity: 0;
         transform: scale(0.5);
       }
-
       70% {
         transform: scale(1.1);
       }
-
       100% {
         opacity: 1;
         transform: scale(1);
       }
-
     }
-
 
     /* =========================
        업로드 영역
     ========================= */
-
     .upload-area {
       margin-top: 35px;
-
       text-align: center;
     }
 
-
     .upload-button {
-
       display: inline-flex;
-
       align-items: center;
       justify-content: center;
-
       padding: 14px 28px;
-
       border: 1px solid #333;
-
       border-radius: 40px;
-
       background: transparent;
-
-      color: #333;
-
+      color: #fff;
       font-size: 13px;
-
       letter-spacing: 1px;
-
       cursor: pointer;
-
       transition: all 0.25s ease;
     }
 
-
     .upload-button:hover {
-
       background: #333;
-
       color: white;
-
     }
-
-
-    /*
-      실제 input은 숨김
-    */
 
     #fileInput {
       display: none;
     }
 
-
-    /* =========================
-       사진 개수
-    ========================= */
-
     .count {
-
       margin-top: 18px;
-
       font-size: 12px;
-
       color: #999;
-
       letter-spacing: 1px;
     }
 
-
-    /* =========================
-       안내 문구
-    ========================= */
-
     .notice {
-
       margin-top: 12px;
-
       font-size: 11px;
-
       color: #aaa;
-
     }
-
 
     /* =========================
        모바일
     ========================= */
-
     @media (max-width: 600px) {
-
       body {
         padding-top: 45px;
       }
-
-
       .header {
         margin-bottom: 35px;
       }
-
-
       h1 {
         font-size: 29px;
         letter-spacing: 2px;
       }
-
-
       .description {
         font-size: 13px;
       }
-
-
       .heart {
-
-        grid-template-columns:
-          repeat(25, 21px);
-
+        grid-template-columns: repeat(25, 21px);
         grid-auto-rows: 21px;
-
         gap: 2px;
-
       }
-
-
       .photo {
-
         width: 21px;
         height: 21px;
-
       }
-
     }
-
   </style>
-
 </head>
-
-
 <body>
 
-
-  <!-- =========================
-       제목
-  ========================= -->
-
   <header class="header">
-
-    <div class="small-title">
-      555
-    </div>
-
-    <h1>
-      WHERE YOUR HEART IS
-    </h1>
-
+    <div class="small-title">555</div>
+    <h1>WHERE YOUR HEART IS</h1>
     <div class="description">
       5:55를 놓친다면 ... <br>
       좀 슬프겠다 ...
     </div>
-
   </header>
 
-
-
-  <!-- =========================
-       하트
-  ========================= -->
-
   <div class="heart-wrapper">
-
-    <div
-      class="heart"
-      id="heart"
-    ></div>
-
+    <div class="heart" id="heart"></div>
   </div>
-
-
-
-  <!-- =========================
-       사진 업로드
-  ========================= -->
 
   <div class="upload-area">
-
-    <label
-      class="upload-button"
-      for="fileInput"
-    >
-      + 사진 남기기
-    </label>
-
-    <input
-      type="file"
-      id="fileInput"
-      accept="image/*"
-      multiple
-    >
-
-
-    <div
-      class="count"
-      id="count"
-    >
-      0 / 130개의 마음이 모였어요
-    </div>
-
-
-    <div class="notice">
-      사진을 여러 장 선택할 수 있어요.
-    </div>
-
+    <label class="upload-button" for="fileInput">+ 사진 남기기</label>
+    <input type="file" id="fileInput" accept="image/*" multiple>
+    <div class="count" id="count">0 / 0개의 마음이 모였어요</div>
+    <div class="notice">사진을 여러 장 선택할 수 있어요.</div>
   </div>
 
+  <!-- Firebase 및 메인 Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
+    // 1. Firebase 키 설정
+    const firebaseConfig = {
+      apiKey: "AIzaSyBkhwQtU9MsamNToGPPjs1Es1jmtc86-Vk",
+      authDomain: "is-5d11b.firebaseapp.com",
+      projectId: "is-5d11b",
+      storageBucket: "is-5d11b.firebasestorage.app",
+      messagingSenderId: "43191763382",
+      appId: "1:43191763382:web:d1c6eb9b74d76b7cc34117"
+    };
 
-  <script>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
 
     /* ==================================
-       하트 모양
-       X = 사진이 들어가는 칸
-       . = 빈 공간
-       ================================== */
-
+       하트 모양 및 그리드 생성
+    ================================== */
     const heartShape = [
-
       ".....XXXXX.......XXXXX.....",
-
       "...XXXXXXXXX...XXXXXXXXX...",
-
       "..XXXXXXXXXXXXXXXXXXXXXXXXX",
-
       ".XXXXXXXXXXXXXXXXXXXXXXXXXXX",
-
       ".XXXXXXXXXXXXXXXXXXXXXXXXXXX",
-
       ".XXXXXXXXXXXXXXXXXXXXXXXXXXX",
-
       "..XXXXXXXXXXXXXXXXXXXXXXXXX.",
-
       "...XXXXXXXXXXXXXXXXXXXXXXX..",
-
       "....XXXXXXXXXXXXXXXXXXXXX...",
-
       ".....XXXXXXXXXXXXXXXXXXX....",
-
       "......XXXXXXXXXXXXXXXXX.....",
-
       ".......XXXXXXXXXXXXXXX......",
-
       "........XXXXXXXXXXXXX.......",
-
       ".........XXXXXXXXXXX........",
-
       "..........XXXXXXXXX.........",
-
       "...........XXXXXXX..........",
-
       "............XXXXX...........",
-
       ".............XXX............",
-
       "..............X............."
-
     ];
 
-
-
-    /* ==================================
-       하트 만들기
-       ================================== */
-
     const heart = document.getElementById("heart");
-
     const photos = [];
 
-
     heartShape.forEach((row, rowIndex) => {
-
       [...row].forEach((character, columnIndex) => {
-
         if (character === "X") {
-
           const photo = document.createElement("div");
-
           photo.className = "photo";
-
-
-          /*
-            CSS Grid 위치 지정
-          */
-
-          photo.style.gridColumn =
-            columnIndex + 1;
-
-          photo.style.gridRow =
-            rowIndex + 1;
-
+          photo.style.gridColumn = columnIndex + 1;
+          photo.style.gridRow = rowIndex + 1;
 
           heart.appendChild(photo);
-
           photos.push(photo);
-
         }
-
       });
-
     });
 
-
+    const count = document.getElementById("count");
+    count.innerText = `0 / ${photos.length}개의 마음이 모였어요`;
 
     /* ==================================
-       사진 업로드
-       ================================== */
+       이미지 압축 (용량 최소화 $0원 유지)
+    ================================== */
+    function compressImage(file, callback) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 100;
+          canvas.height = 100;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, 100, 100);
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+          callback(compressedDataUrl);
+        };
+      };
+    }
 
-    const fileInput =
-      document.getElementById("fileInput");
+    /* ==================================
+       실시간 데이터 수신 (모든 사용자 공유)
+    ================================== */
+    let uploadedIndices = new Set();
 
-    const count =
-      document.getElementById("count");
+    onSnapshot(collection(db, "heart_pixels"), (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added" || change.type === "modified") {
+          const data = change.doc.data();
+          const index = data.index;
+          const imageUrl = data.imageUrl;
 
-
-    let currentIndex = 0;
-
-
-    fileInput.addEventListener(
-      "change",
-      function(event) {
-
-        const files =
-          Array.from(event.target.files);
-
-
-        files.forEach(file => {
-
-
-          /*
-            하트가 다 찼으면 중단
-          */
-
-          if (
-            currentIndex >= photos.length
-          ) {
-
-            return;
-
+          if (index < photos.length) {
+            photos[index].innerHTML = `<img src="${imageUrl}">`;
+            photos[index].classList.add("filled");
+            uploadedIndices.add(index);
           }
+        }
+      });
 
+      count.innerText = `${uploadedIndices.size} / ${photos.length}개의 마음이 모였어요`;
+    });
 
-          /*
-            이미지 파일만
-          */
+    /* ==================================
+       사진 업로드 이벤트
+    ================================== */
+    const fileInput = document.getElementById("fileInput");
 
-          if (!file.type.startsWith("image/")) {
+    fileInput.addEventListener("change", async function(event) {
+      const files = Array.from(event.target.files);
 
-            return;
+      for (const file of files) {
+        // 하트가 가득 찼으면 중단
+        if (uploadedIndices.size >= photos.length) break;
 
+        if (!file.type.startsWith("image/")) continue;
+
+        // 아직 채워지지 않은 첫 번째 빈 셀 찾기
+        let targetIndex = -1;
+        for (let i = 0; i < photos.length; i++) {
+          if (!uploadedIndices.has(i)) {
+            targetIndex = i;
+            break;
           }
-
-
-          const reader =
-            new FileReader();
-
-
-          reader.onload =
-            function(e) {
-
-
-              const img =
-                document.createElement("img");
-
-
-              img.src =
-                e.target.result;
-
-
-              /*
-                사진 넣기
-              */
-
-              photos[currentIndex]
-                .appendChild(img);
-
-
-              /*
-                애니메이션
-              */
-
-              photos[currentIndex]
-                .classList.add("filled");
-
-
-              currentIndex++;
-
-
-              /*
-                숫자 변경
-              */
-
-              count.innerText =
-                currentIndex +
-                " / " +
-                photos.length +
-                "개의 마음이 모였어요";
-
-            };
-
-
-          reader.readAsDataURL(file);
-
         }
 
+        if (targetIndex === -1) break;
 
-        );
+        // 중복 업로드 방지를 위해 미리 표시
+        uploadedIndices.add(targetIndex);
 
+        // 압축 후 저장
+        compressImage(file, async (compressedDataUrl) => {
+          try {
+            const storageRef = ref(storage, `hearts/pixel_${targetIndex}.jpg`);
+            await uploadString(storageRef, compressedDataUrl, 'data_url');
+            const downloadURL = await getDownloadURL(storageRef);
 
-        /*
-          같은 사진을 다시 선택할 수 있도록
-          input 초기화
-        */
-
-        fileInput.value = "";
-
+            await setDoc(doc(db, "heart_pixels", `pixel_${targetIndex}`), {
+              index: targetIndex,
+              imageUrl: downloadURL,
+              updatedAt: new Date()
+            });
+          } catch (err) {
+            console.error("업로드 오류:", err);
+            uploadedIndices.delete(targetIndex);
+          }
+        });
       }
 
-    );
-
+      fileInput.value = "";
+    });
   </script>
-
-
 </body>
 </html>

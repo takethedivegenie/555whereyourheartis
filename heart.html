@@ -215,9 +215,8 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
-    // 1. Firebase 키 설정
+    // Firebase 키 설정
     const firebaseConfig = {
       apiKey: "AIzaSyBkhwQtU9MsamNToGPPjs1Es1jmtc86-Vk",
       authDomain: "is-5d11b.firebaseapp.com",
@@ -229,7 +228,6 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
     /* ==================================
        하트 모양 및 그리드 생성
@@ -277,7 +275,7 @@
     count.innerText = `0 / ${photos.length}개의 마음이 모였어요`;
 
     /* ==================================
-       이미지 압축 (용량 최소화 $0원 유지)
+       이미지 초고압축 (Firestore 직접 저장용)
     ================================== */
     function compressImage(file, callback) {
       const reader = new FileReader();
@@ -287,11 +285,12 @@
         img.src = e.target.result;
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          canvas.width = 100;
-          canvas.height = 100;
+          canvas.width = 80;
+          canvas.height = 80;
           const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, 100, 100);
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+          ctx.drawImage(img, 0, 0, 80, 80);
+          // 용량을 최소화하여 DB에 직접 저장
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.6);
           callback(compressedDataUrl);
         };
       };
@@ -307,10 +306,10 @@
         if (change.type === "added" || change.type === "modified") {
           const data = change.doc.data();
           const index = data.index;
-          const imageUrl = data.imageUrl;
+          const imageData = data.imageData;
 
           if (index < photos.length) {
-            photos[index].innerHTML = `<img src="${imageUrl}">`;
+            photos[index].innerHTML = `<img src="${imageData}">`;
             photos[index].classList.add("filled");
             uploadedIndices.add(index);
           }
@@ -329,12 +328,9 @@
       const files = Array.from(event.target.files);
 
       for (const file of files) {
-        // 하트가 가득 찼으면 중단
         if (uploadedIndices.size >= photos.length) break;
-
         if (!file.type.startsWith("image/")) continue;
 
-        // 아직 채워지지 않은 첫 번째 빈 셀 찾기
         let targetIndex = -1;
         for (let i = 0; i < photos.length; i++) {
           if (!uploadedIndices.has(i)) {
@@ -345,19 +341,14 @@
 
         if (targetIndex === -1) break;
 
-        // 중복 업로드 방지를 위해 미리 표시
         uploadedIndices.add(targetIndex);
 
-        // 압축 후 저장
         compressImage(file, async (compressedDataUrl) => {
           try {
-            const storageRef = ref(storage, `hearts/pixel_${targetIndex}.jpg`);
-            await uploadString(storageRef, compressedDataUrl, 'data_url');
-            const downloadURL = await getDownloadURL(storageRef);
-
+            // Storage를 거치지 않고 DB에 이미지 데이터 직접 저장
             await setDoc(doc(db, "heart_pixels", `pixel_${targetIndex}`), {
               index: targetIndex,
-              imageUrl: downloadURL,
+              imageData: compressedDataUrl,
               updatedAt: new Date()
             });
           } catch (err) {

@@ -7,6 +7,11 @@
   <title>Where Your Heart Is</title>
 
   <style>
+
+    /* =========================
+       기본 설정
+    ========================= */
+
     * {
       box-sizing: border-box;
     }
@@ -14,59 +19,128 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #f8f5f0;
-      font-family: Arial, sans-serif;
+
+      background: #f7f4ef;
       color: #333;
+
+      font-family:
+        Arial,
+        "Noto Sans KR",
+        sans-serif;
 
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
 
-      padding: 50px 20px;
+      padding: 70px 20px;
+    }
+
+
+    /* =========================
+       제목
+    ========================= */
+
+    .header {
+      text-align: center;
+      margin-bottom: 55px;
+    }
+
+    .small-title {
+      font-size: 12px;
+      letter-spacing: 5px;
+      margin-bottom: 22px;
+
+      color: #888;
     }
 
     h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
+      margin: 0;
+
+      font-size: 42px;
+      font-weight: 400;
+
+      letter-spacing: 3px;
+      line-height: 1.2;
     }
 
     .description {
-      margin-bottom: 40px;
-      color: #777;
-      text-align: center;
+      margin-top: 20px;
+
+      font-size: 14px;
+      line-height: 1.8;
+
+      color: #888;
     }
 
-    /* 하트 전체 */
+
+    /* =========================
+       하트
+    ========================= */
+
+    .heart-wrapper {
+      width: 100%;
+
+      display: flex;
+      justify-content: center;
+
+      overflow-x: auto;
+
+      padding: 10px 0 20px;
+    }
+
+
     .heart {
       display: grid;
 
-      /* 7칸짜리 그리드 */
-      grid-template-columns: repeat(7, 70px);
-      grid-template-rows: repeat(6, 70px);
+      /*
+        하트 전체를 25열로 구성
+      */
 
-      gap: 5px;
+      grid-template-columns:
+        repeat(25, 32px);
 
-      margin-bottom: 40px;
+      grid-auto-rows: 32px;
+
+      gap: 4px;
+
+      width: max-content;
     }
 
-    /* 사진 한 칸 */
-    .photo {
-      width: 70px;
-      height: 70px;
 
-      background: #ddd;
+    /* =========================
+       사진 칸
+    ========================= */
+
+    .photo {
+      width: 32px;
+      height: 32px;
+
+      background: #e4e0da;
 
       overflow: hidden;
 
-      cursor: pointer;
+      position: relative;
 
-      transition: transform 0.3s ease;
+      transition:
+        transform 0.25s ease,
+        opacity 0.25s ease;
     }
+
+
+    /*
+      마우스를 올렸을 때
+    */
 
     .photo:hover {
-      transform: scale(1.08);
+      transform: scale(1.12);
+
+      z-index: 5;
     }
+
+
+    /*
+      실제 사진
+    */
 
     .photo img {
       width: 100%;
@@ -77,172 +151,466 @@
       display: block;
     }
 
-    /* 사진 업로드 버튼 */
+
+    /*
+      사진이 들어올 때 애니메이션
+    */
+
+    .photo.filled {
+      animation: appear 0.5s ease;
+    }
+
+
+    @keyframes appear {
+
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+
+      70% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+    }
+
+
+    /* =========================
+       업로드 영역
+    ========================= */
+
+    .upload-area {
+      margin-top: 35px;
+
+      text-align: center;
+    }
+
+
     .upload-button {
-      display: inline-block;
 
-      padding: 14px 25px;
+      display: inline-flex;
 
-      background: #333;
-      color: white;
+      align-items: center;
+      justify-content: center;
 
-      border-radius: 30px;
+      padding: 14px 28px;
+
+      border: 1px solid #333;
+
+      border-radius: 40px;
+
+      background: transparent;
+
+      color: #333;
+
+      font-size: 13px;
+
+      letter-spacing: 1px;
 
       cursor: pointer;
 
-      font-size: 15px;
+      transition: all 0.25s ease;
     }
 
+
     .upload-button:hover {
-      opacity: 0.8;
+
+      background: #333;
+
+      color: white;
+
     }
+
+
+    /*
+      실제 input은 숨김
+    */
 
     #fileInput {
       display: none;
     }
 
+
+    /* =========================
+       사진 개수
+    ========================= */
+
     .count {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #888;
+
+      margin-top: 18px;
+
+      font-size: 12px;
+
+      color: #999;
+
+      letter-spacing: 1px;
     }
 
-    /* 모바일 */
+
+    /* =========================
+       안내 문구
+    ========================= */
+
+    .notice {
+
+      margin-top: 12px;
+
+      font-size: 11px;
+
+      color: #aaa;
+
+    }
+
+
+    /* =========================
+       모바일
+    ========================= */
+
     @media (max-width: 600px) {
 
-      .heart {
-        grid-template-columns: repeat(7, 42px);
-        grid-template-rows: repeat(6, 42px);
-
-        gap: 3px;
+      body {
+        padding-top: 45px;
       }
 
-      .photo {
-        width: 42px;
-        height: 42px;
+
+      .header {
+        margin-bottom: 35px;
       }
+
 
       h1 {
-        font-size: 25px;
+        font-size: 29px;
+        letter-spacing: 2px;
       }
+
+
+      .description {
+        font-size: 13px;
+      }
+
+
+      .heart {
+
+        grid-template-columns:
+          repeat(25, 21px);
+
+        grid-auto-rows: 21px;
+
+        gap: 2px;
+
+      }
+
+
+      .photo {
+
+        width: 21px;
+        height: 21px;
+
+      }
+
     }
+
   </style>
+
 </head>
 
 
 <body>
 
-  <h1>Where Your Heart Is</h1>
 
-  <div class="description">
-    당신의 마음이 머무는 순간을 남겨주세요.
-  </div>
+  <!-- =========================
+       제목
+  ========================= -->
+
+  <header class="header">
+
+    <div class="small-title">
+      555
+    </div>
+
+    <h1>
+      WHERE YOUR HEART IS
+    </h1>
+
+    <div class="description">
+      당신의 마음이 머무는 순간을 남겨주세요.<br>
+      우리의 사진이 모여 하나의 하트가 됩니다.
+    </div>
+
+  </header>
 
 
-  <!-- 하트 -->
-  <div class="heart">
 
-    <!-- 1번째 줄 -->
-    <div class="photo" style="grid-column: 2;"></div>
-    <div class="photo" style="grid-column: 3;"></div>
-    <div class="photo" style="grid-column: 5;"></div>
-    <div class="photo" style="grid-column: 6;"></div>
+  <!-- =========================
+       하트
+  ========================= -->
 
-    <!-- 2번째 줄 -->
-    <div class="photo" style="grid-column: 1;"></div>
-    <div class="photo" style="grid-column: 2;"></div>
-    <div class="photo" style="grid-column: 3;"></div>
-    <div class="photo" style="grid-column: 4;"></div>
-    <div class="photo" style="grid-column: 5;"></div>
-    <div class="photo" style="grid-column: 6;"></div>
-    <div class="photo" style="grid-column: 7;"></div>
+  <div class="heart-wrapper">
 
-    <!-- 3번째 줄 -->
-    <div class="photo" style="grid-column: 1;"></div>
-    <div class="photo" style="grid-column: 2;"></div>
-    <div class="photo" style="grid-column: 3;"></div>
-    <div class="photo" style="grid-column: 4;"></div>
-    <div class="photo" style="grid-column: 5;"></div>
-    <div class="photo" style="grid-column: 6;"></div>
-    <div class="photo" style="grid-column: 7;"></div>
-
-    <!-- 4번째 줄 -->
-    <div class="photo" style="grid-column: 2;"></div>
-    <div class="photo" style="grid-column: 3;"></div>
-    <div class="photo" style="grid-column: 4;"></div>
-    <div class="photo" style="grid-column: 5;"></div>
-    <div class="photo" style="grid-column: 6;"></div>
-
-    <!-- 5번째 줄 -->
-    <div class="photo" style="grid-column: 3;"></div>
-    <div class="photo" style="grid-column: 4;"></div>
-    <div class="photo" style="grid-column: 5;"></div>
-
-    <!-- 6번째 줄 -->
-    <div class="photo" style="grid-column: 4;"></div>
+    <div
+      class="heart"
+      id="heart"
+    ></div>
 
   </div>
 
 
-  <!-- 사진 업로드 -->
-  <label class="upload-button">
-    + 사진 남기기
+
+  <!-- =========================
+       사진 업로드
+  ========================= -->
+
+  <div class="upload-area">
+
+    <label
+      class="upload-button"
+      for="fileInput"
+    >
+      + 사진 남기기
+    </label>
+
     <input
       type="file"
       id="fileInput"
       accept="image/*"
       multiple
     >
-  </label>
 
-  <div class="count">
-    0 / 27개의 마음이 모였어요
+
+    <div
+      class="count"
+      id="count"
+    >
+      0 / 130개의 마음이 모였어요
+    </div>
+
+
+    <div class="notice">
+      사진을 여러 장 선택할 수 있어요.
+    </div>
+
   </div>
 
 
-<script>
 
-  const input = document.getElementById("fileInput");
-  const photos = document.querySelectorAll(".photo");
-  const count = document.querySelector(".count");
+  <script>
 
-  let currentPhoto = 0;
+    /* ==================================
+       하트 모양
+       X = 사진이 들어가는 칸
+       . = 빈 공간
+       ================================== */
+
+    const heartShape = [
+
+      ".....XXXXX.......XXXXX.....",
+
+      "...XXXXXXXXX...XXXXXXXXX...",
+
+      "..XXXXXXXXXXXXXXXXXXXXXXXXX",
+
+      ".XXXXXXXXXXXXXXXXXXXXXXXXXXX",
+
+      ".XXXXXXXXXXXXXXXXXXXXXXXXXXX",
+
+      ".XXXXXXXXXXXXXXXXXXXXXXXXXXX",
+
+      "..XXXXXXXXXXXXXXXXXXXXXXXXX.",
+
+      "...XXXXXXXXXXXXXXXXXXXXXXX..",
+
+      "....XXXXXXXXXXXXXXXXXXXXX...",
+
+      ".....XXXXXXXXXXXXXXXXXXX....",
+
+      "......XXXXXXXXXXXXXXXXX.....",
+
+      ".......XXXXXXXXXXXXXXX......",
+
+      "........XXXXXXXXXXXXX.......",
+
+      ".........XXXXXXXXXXX........",
+
+      "..........XXXXXXXXX.........",
+
+      "...........XXXXXXX..........",
+
+      "............XXXXX...........",
+
+      ".............XXX............",
+
+      "..............X............."
+
+    ];
 
 
-  input.addEventListener("change", function(event) {
 
-    const files = Array.from(event.target.files);
+    /* ==================================
+       하트 만들기
+       ================================== */
 
-    files.forEach(file => {
+    const heart = document.getElementById("heart");
 
-      if (currentPhoto >= photos.length) {
-        return;
-      }
+    const photos = [];
 
-      const reader = new FileReader();
 
-      reader.onload = function(e) {
+    heartShape.forEach((row, rowIndex) => {
 
-        const img = document.createElement("img");
+      [...row].forEach((character, columnIndex) => {
 
-        img.src = e.target.result;
+        if (character === "X") {
 
-        photos[currentPhoto].appendChild(img);
+          const photo = document.createElement("div");
 
-        currentPhoto++;
+          photo.className = "photo";
 
-        count.innerText =
-          currentPhoto + " / 27개의 마음이 모였어요";
 
-      };
+          /*
+            CSS Grid 위치 지정
+          */
 
-      reader.readAsDataURL(file);
+          photo.style.gridColumn =
+            columnIndex + 1;
+
+          photo.style.gridRow =
+            rowIndex + 1;
+
+
+          heart.appendChild(photo);
+
+          photos.push(photo);
+
+        }
+
+      });
 
     });
 
-  });
 
-</script>
+
+    /* ==================================
+       사진 업로드
+       ================================== */
+
+    const fileInput =
+      document.getElementById("fileInput");
+
+    const count =
+      document.getElementById("count");
+
+
+    let currentIndex = 0;
+
+
+    fileInput.addEventListener(
+      "change",
+      function(event) {
+
+        const files =
+          Array.from(event.target.files);
+
+
+        files.forEach(file => {
+
+
+          /*
+            하트가 다 찼으면 중단
+          */
+
+          if (
+            currentIndex >= photos.length
+          ) {
+
+            return;
+
+          }
+
+
+          /*
+            이미지 파일만
+          */
+
+          if (!file.type.startsWith("image/")) {
+
+            return;
+
+          }
+
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            function(e) {
+
+
+              const img =
+                document.createElement("img");
+
+
+              img.src =
+                e.target.result;
+
+
+              /*
+                사진 넣기
+              */
+
+              photos[currentIndex]
+                .appendChild(img);
+
+
+              /*
+                애니메이션
+              */
+
+              photos[currentIndex]
+                .classList.add("filled");
+
+
+              currentIndex++;
+
+
+              /*
+                숫자 변경
+              */
+
+              count.innerText =
+                currentIndex +
+                " / " +
+                photos.length +
+                "개의 마음이 모였어요";
+
+            };
+
+
+          reader.readAsDataURL(file);
+
+        }
+
+
+        );
+
+
+        /*
+          같은 사진을 다시 선택할 수 있도록
+          input 초기화
+        */
+
+        fileInput.value = "";
+
+      }
+
+    );
+
+  </script>
+
 
 </body>
 </html>
